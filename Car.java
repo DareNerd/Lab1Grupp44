@@ -10,7 +10,7 @@ public abstract class Car implements Movable {
     private double x = 0;
     private double y = 0;
 
-    private String direction = "north";
+    private Directions direction = Directions.NORTH;
 
     public Car() {}
 
@@ -23,38 +23,38 @@ public abstract class Car implements Movable {
     }
 
     public void move() {
-        if(this.direction.equals("north")) {
+        if(getDirection() == Directions.NORTH) {
             this.y += getCurrentSpeed();
-        } else if (this.direction.equals("south")) {
+        } else if (getDirection() == Directions.SOUTH) {
             this.y -= getCurrentSpeed();
-        } else if (this.direction.equals("east")) {
+        } else if (getDirection() == Directions.EAST) {
             this.x += getCurrentSpeed();
-        } else {
+        } else if (getDirection() == Directions.WEST) {
             this.x -= getCurrentSpeed();
         }
     }
 
     public void turnLeft() {
-        if(this.direction.equals("north")) {
-            this.direction = "west";
-        } else if (this.direction.equals("south")) {
-            this.direction = "east";
-        } else if (this.direction.equals("east")) {
-            this.direction = "north";
-        } else {
-            this.direction = "south";
+        if(getDirection() == Directions.NORTH) {
+            setDirection(Directions.WEST);
+        } else if (getDirection() == Directions.SOUTH) {
+            setDirection(Directions.EAST);
+        } else if (getDirection() == Directions.EAST) {
+            setDirection(Directions.NORTH);
+        } else if (getDirection() == Directions.WEST) {
+            setDirection(Directions.SOUTH);
         }
     }
 
     public void turnRight() {
-        if(this.direction.equals("north")) {
-            this.direction = "east";
-        } else if (this.direction.equals("south")) {
-            this.direction = "west";
-        } else if (this.direction.equals("east")) {
-            this.direction = "south";
-        } else {
-            this.direction = "north";
+        if(getDirection() == Directions.NORTH) {
+            setDirection(Directions.EAST);
+        } else if (getDirection() == Directions.SOUTH) {
+            setDirection(Directions.WEST);
+        } else if (getDirection() == Directions.EAST) {
+            setDirection(Directions.SOUTH);
+        } else if (getDirection() == Directions.WEST) {
+            setDirection(Directions.NORTH);
         }
     }
 
@@ -147,11 +147,11 @@ public abstract class Car implements Movable {
         this.y = y;
     }
 
-    public String getDirection() {
+    public Directions getDirection() {
         return direction;
     }
 
-    public void setDirection(String direction) {
+    public void setDirection(Directions direction) {
         this.direction = direction;
     }
 }
