@@ -66,11 +66,10 @@ public abstract class Car implements Movable {
     }
 
     public void brake(double amount){
-        if (0 <= amount && amount <= 1) {
-            decrementSpeed(amount);
-        } else {
+        if (amount < 0 || amount > 1) {
             throw new IllegalArgumentException("illegal amount");
         }
+        decrementSpeed(amount);
     }
 
     public abstract double speedFactor();
