@@ -11,10 +11,4 @@ public class Volvo240 extends Car {
     public double speedFactor(){
         return getEnginePower() * 0.01 * trimFactor;
     }
-
-    static void main() {
-        Car car = new Volvo240();
-        car.gas(-1.0);
-        System.out.println(car.getCurrentSpeed());
-    }
 }
