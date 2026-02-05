@@ -7,8 +7,6 @@ public abstract class Truck extends Car {
         super(nrDoors, enginePower, color, modelName);
     }
 
-
-
     public void setTruckBedAngle(double angle) {
         if (this.getCurrentSpeed() != 0) {
             throw new RuntimeException("you are driving!");
