@@ -2,6 +2,9 @@ public class CargoSpace {
     private final boolean tiltable; //if the cargo space door is tiltable
     private final boolean liftable; //if the cargo space has a lowerable platform
     private double truckBedAngle = 0; //angle at which the door might be
+    Truck truck;
+
+    // TODO: RED UT VILKA KONSTRUKTORER VI VILL HA
     private boolean platformLowered = false; //platform position, false is up, true if down
     private double maxAngle; //maximum angle of a tiltable door
     //kan utökas med mer funktionalitet kring faktisk lastning, typ kapacitet
@@ -9,7 +12,7 @@ public class CargoSpace {
     //constructor for cargo spaces with a tiltable door, can also be liftable
     public CargoSpace(boolean tiltable, boolean liftable, double maxAngle) {
         this.tiltable = tiltable;
-        this.liftable = liftable;
+        this.liftable = liftable; // för lastbilar borde den vara false direkt
         this.maxAngle = maxAngle;
     }
 
@@ -22,12 +25,24 @@ public class CargoSpace {
         this.liftable = liftable;
     }
 
+    public CargoSpace(boolean tiltable, double maxAngle) {
+        this.tiltable = tiltable;
+        this.maxAngle = maxAngle;
+        this.liftable = false;
+    }
+
+    public CargoSpace(boolean liftable, Truck truck) {
+        this.tiltable = false;
+        this.liftable = liftable;
+        this.truck = truck;
+    }
+
     /**
      * Checks if the vehicle can be moved
      * @return true or false
      */
     public boolean movingOK() {
-        boolean tiltOK = !tiltable || truckBedAngle == maxAngle;
+        boolean tiltOK = !tiltable || truckBedAngle == maxAngle; // truckBedAngle == 0?
         boolean liftOK = !liftable || !platformLowered;
         return tiltOK && liftOK;
     }
@@ -51,6 +66,22 @@ public class CargoSpace {
      */
     public void setPlatformHeight(boolean lowered) {
         if (!liftable) { throw new IllegalArgumentException("this has no liftable platform!"); }
-        this.platformLowered = lowered;
+        if (this.truck.getCurrentSpeed() != 0) {
+            System.out.println("The truck is moving!");
+        } else {
+            this.platformLowered = lowered;
+        }
+    }
+
+    public boolean isTiltable() {
+        return tiltable;
+    }
+
+    public boolean isLiftable() {
+        return liftable;
+    }
+
+    public boolean isPlatformLowered() {
+        return platformLowered;
     }
 }
