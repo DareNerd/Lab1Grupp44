@@ -31,10 +31,10 @@ public class CargoSpace {
         this.liftable = false;
     }
 
-    public CargoSpace(boolean liftable, Truck truck) {
+    public CargoSpace(boolean liftable, CarTransport ct) {
         this.tiltable = false;
         this.liftable = liftable;
-        this.truck = truck;
+        this.truck = ct;
     }
 
     /**
@@ -42,7 +42,7 @@ public class CargoSpace {
      * @return true or false
      */
     public boolean movingOK() {
-        boolean tiltOK = !tiltable || truckBedAngle == maxAngle; // truckBedAngle == 0?
+        boolean tiltOK = !tiltable || truckBedAngle == 0;
         boolean liftOK = !liftable || !platformLowered;
         return tiltOK && liftOK;
     }
@@ -83,5 +83,9 @@ public class CargoSpace {
 
     public boolean isPlatformLowered() {
         return platformLowered;
+    }
+
+    public double getTruckBedAngle() {
+        return truckBedAngle;
     }
 }
