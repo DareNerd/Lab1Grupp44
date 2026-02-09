@@ -2,10 +2,11 @@ import java.awt.*;
 
 public class ScaniaS730 extends Truck {
 
-    private CargoSpace truckBed;
+    private final CargoSpace truckBed;
+
     public ScaniaS730() {
         super(2, 200, Color.magenta, "ScaniaS730");
-        truckBed = new CargoSpace(true, false, 70);
+        truckBed = new CargoSpace(true, 70, this);
     }
 
     public double speedFactor() {
