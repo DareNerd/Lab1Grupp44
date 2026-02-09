@@ -4,18 +4,21 @@ public class CargoSpace {
     private double truckBedAngle = 0; //angle at which the door might be
     Truck truck;
 
-    // TODO: RED UT VILKA KONSTRUKTORER VI VILL HA
     private boolean platformLowered = false; //platform position, false is up, true if down
     private double maxAngle; //maximum angle of a tiltable door
     //kan utökas med mer funktionalitet kring faktisk lastning, typ kapacitet
 
+
+    /* tycker inte att denna behövs, finns ingen truck/cartransport som är både tiltable och liftable
     //constructor for cargo spaces with a tiltable door, can also be liftable
     public CargoSpace(boolean tiltable, boolean liftable, double maxAngle) {
         this.tiltable = tiltable;
-        this.liftable = liftable; // för lastbilar borde den vara false direkt
+        this.liftable = liftable;
         this.maxAngle = maxAngle;
     }
+    */
 
+    /* behövs inte heller om ovanstående inte finns
     //constructor for cargo spaces with only a liftable platform and no tilting abilities
     public CargoSpace(boolean tiltable, boolean liftable) {
         if (!tiltable) {
@@ -24,17 +27,21 @@ public class CargoSpace {
         this.tiltable = true;
         this.liftable = liftable;
     }
+     */
 
-    public CargoSpace(boolean tiltable, double maxAngle) {
+    // för vanlig Truck med tiltable truck bed
+    public CargoSpace(boolean tiltable, double maxAngle, Truck truck) {
         this.tiltable = tiltable;
         this.maxAngle = maxAngle;
         this.liftable = false;
+        this.truck = truck;
     }
 
-    public CargoSpace(boolean liftable, CarTransport ct) {
+    // för CarTransport
+    public CargoSpace(boolean liftable, CarTransport cartransport) {
         this.tiltable = false;
         this.liftable = liftable;
-        this.truck = ct;
+        this.truck = cartransport;
     }
 
     /**
@@ -53,7 +60,9 @@ public class CargoSpace {
      * @throws IllegalArgumentException if angle is out of the set bound
      */
     public void setTruckBedAngle(double angle) {
-        if (angle < 0 || angle > maxAngle) {
+        if (this.truck.getCurrentSpeed() != 0) {
+            throw new RuntimeException("you are driving!");
+        } else if (angle < 0 || angle > 70) {
             throw new IllegalArgumentException("illegal angle");
         }
         this.truckBedAngle = angle;
