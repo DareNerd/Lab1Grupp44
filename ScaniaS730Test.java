@@ -1,16 +1,38 @@
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class ScaniaS730Test {
+    private ScaniaS730 test;
 
-    @Test
-    void setTruckBedAngle() {
+    @BeforeEach
+    void setup() {
+        test = new ScaniaS730();
     }
 
     @Test
-    void move() {
-        ScaniaS730 test = new ScaniaS730();
+    void setTruckBedAngle() {
+        test.setTruckBedAngle(66.6);
+        double expected = 66.6;
+
+        assertEquals(expected, test.getTruckBedAngle());
+    }
+
+    @Test
+    void setIllegalTruckBedAngle() {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            test.setTruckBedAngle(666.666);
+        });
+
+        String expected = "illegal angle";
+        String actual = exception.getMessage();
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void moveException() {
         test.setTruckBedAngle(42.0);
 
         Exception exception = assertThrows(RuntimeException.class, () -> {
@@ -21,12 +43,5 @@ class ScaniaS730Test {
         String actualMessage = exception.getMessage();
 
         assertTrue(actualMessage.contains(expectedMessage));
-    }
-    @Test
-    void moveAgain() {
-        ScaniaS730 test = new ScaniaS730();
-        System.out.println(test.truckBedAngle);
-        test.setCurrentSpeed(10);
-        test.gas(0.5);
     }
 }
