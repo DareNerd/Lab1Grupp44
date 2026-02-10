@@ -1,12 +1,18 @@
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class CarTest {
+    private Car car;
+
+    @BeforeEach
+    void setup() {
+        car = new Volvo240();
+    }
 
     @Test
     void gasIncreasesSpeed() {
-        Car car = new Volvo240();
         car.startEngine();
 
         double speedBefore = car.getCurrentSpeed();
@@ -18,9 +24,6 @@ class CarTest {
 
     @Test
     void negativeAmountOnGas() {
-        Car car = new Saab95();
-
-
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             car.gas(-1.0);
         });
@@ -33,7 +36,6 @@ class CarTest {
 
     @Test
     void brakeDecreasesSpeed() {
-        Car car = new Saab95();
         car.startEngine();
         car.gas(1.0);
 
@@ -46,7 +48,6 @@ class CarTest {
 
     @Test
     void speedNeverExceedsEnginePower() {
-        Car car = new Saab95();
         car.startEngine();
 
         for (int i = 0; i < 200; i++) {
@@ -58,7 +59,6 @@ class CarTest {
 
     @Test
     void speedNeverDropsBelowZero() {
-        Car car = new Volvo240();
         car.startEngine();
 
         for (int i = 0; i < 200; i++) {
