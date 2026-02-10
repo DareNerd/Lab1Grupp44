@@ -73,7 +73,7 @@ public class CargoSpace {
      * @param lowered true if platform is lowered
      * @throws IllegalArgumentException if the cargo space has no liftable platform
      */
-    public void setPlatformHeight(boolean lowered) {
+    public void setPlatformLowered(boolean lowered) {
         if (!liftable) { throw new IllegalArgumentException("this has no liftable platform!"); }
         if (this.truck.getCurrentSpeed() != 0) {
             System.out.println("The truck is moving!");
@@ -96,5 +96,13 @@ public class CargoSpace {
 
     public double getTruckBedAngle() {
         return truckBedAngle;
+    }
+
+    public Truck getTruck() {
+        return truck;
+    }
+
+    public double getMaxAngle() {
+        return maxAngle;
     }
 }
