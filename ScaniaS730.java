@@ -35,4 +35,8 @@ public class ScaniaS730 extends Truck {
         }
         truckBed.setTruckBedAngle(angle);
     }
+
+    public double getTruckBedAngle() {
+        return truckBed.getTruckBedAngle();
+    }
 }
