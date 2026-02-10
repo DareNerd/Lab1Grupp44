@@ -31,7 +31,7 @@ public class ScaniaS730 extends Truck {
 
     public void setTruckBedAngle(double angle) {
         if (getCurrentSpeed() != 0) {
-            throw new RuntimeException("can't change angle while you are driving!");
+            throw new RuntimeException("can't raise your truck bed while you are driving!");
         }
         truckBed.setTruckBedAngle(angle);
     }
