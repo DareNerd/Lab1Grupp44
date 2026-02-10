@@ -27,7 +27,7 @@ public class CarTransport extends Truck {
             System.out.println("The car is too far away!");
         } else if (!truckBed.isPlatformLowered()) {
             System.out.println("Platform not lowered!");
-        } else if (car.getClass().getSuperclass().equals(Truck.class)) { // TODO: KOLLA OM DET ÄR EN LASTBIL ELLER EJ
+        } else if (car.getClass().getSuperclass().equals(Truck.class)) {
             System.out.println("För stor!");
         }
         else {
