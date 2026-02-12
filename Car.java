@@ -10,7 +10,7 @@ public abstract class Car implements Movable {
     private double x = 0;
     private double y = 0;
 
-    private Directions direction = Directions.NORTH;
+    private Directions direction = Directions.EAST;
 
     public Car() {}
 
@@ -24,9 +24,9 @@ public abstract class Car implements Movable {
 
     public void move() {
         if(getDirection() == Directions.NORTH) {
-            this.y += getCurrentSpeed();
-        } else if (getDirection() == Directions.SOUTH) {
             this.y -= getCurrentSpeed();
+        } else if (getDirection() == Directions.SOUTH) {
+            this.y += getCurrentSpeed();
         } else if (getDirection() == Directions.EAST) {
             this.x += getCurrentSpeed();
         } else if (getDirection() == Directions.WEST) {
