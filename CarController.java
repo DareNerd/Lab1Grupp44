@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 
 /*
@@ -33,9 +34,9 @@ public class CarController {
         // Start a new view and send a reference of self
         cc.frame = new CarView("CarSim 1.0", cc);
 
-        cc.cars.add(new Volvo240());
-        //cc.cars.add(new Saab95());
+        cc.cars.add(new Saab95());
         cc.cars.add(new ScaniaS730());
+        cc.cars.add(new Volvo240());
 
         for(Car car: cc.cars){
             cc.frame.drawPanel.setImageForCar(car.hashCode(), car.getModelName());
@@ -49,14 +50,12 @@ public class CarController {
         }
 
 
-        int y = 300;
+        int y = 100;
 
         for (Car car: cc.cars){
             car.setY(y);
-            //y += 100;
+            y += 100;
         }
-
-
 
         // Start the timer
         cc.timer.start();
@@ -67,10 +66,12 @@ public class CarController {
     * */
     private class TimerListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            int workshopX = (int) carWorkshops.get(0).getX();
-            int workshopY = (int) carWorkshops.get(0).getY();
+            int workshopX = (int) carWorkshops.getFirst().getX();
+            int workshopY = (int) carWorkshops.getFirst().getY();
 
-            for (Car car : cars) {
+            Iterator<Car> iterator = cars.iterator();
+            while (iterator.hasNext()) {
+                Car car = iterator.next();
                 car.move();
 
                 int y = (int) car.getY();
@@ -102,12 +103,10 @@ public class CarController {
 
                 if(Math.abs(x - workshopX) <= 10 && Math.abs(y - workshopY) <= 10){
                     if(car instanceof Volvo240){
-                        carWorkshops.get(0).addCar(car);
-                        cars.remove(car);
+                        carWorkshops.getFirst().addCar(car);
+                        iterator.remove();
                     }
                 }
-
-                System.out.println(carWorkshops.get(0).getCarArrayList());
             }
         }
     }
