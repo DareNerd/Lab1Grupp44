@@ -3,6 +3,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+
 /*
 * This class represents the Controller part in the MVC pattern.
 * Its responsibilities are to listen to the View and responds in a appropriate manner by
@@ -22,26 +23,40 @@ public class CarController {
     CarView frame;
     // A list of cars, modify if needed
     ArrayList<Car> cars = new ArrayList<>();
+    ArrayList<Bilverkstad> carWorkshops = new ArrayList<>();
 
     //methods:
 
     public static void main(String[] args) {
         // Instance of this class
         CarController cc = new CarController();
+        // Start a new view and send a reference of self
+        cc.frame = new CarView("CarSim 1.0", cc);
 
         cc.cars.add(new Volvo240());
-        cc.cars.add(new Saab95());
+        //cc.cars.add(new Saab95());
         cc.cars.add(new ScaniaS730());
 
-        int y = 0;
+        for(Car car: cc.cars){
+            cc.frame.drawPanel.setImageForCar(car.hashCode(), car.getModelName());
+            cc.frame.drawPanel.moveit(car.hashCode(),0,0);
+        }
+
+        cc.carWorkshops.add(new VolvoWorkshop(8, 300, 300));
+
+        for(Bilverkstad bilverkstad: cc.carWorkshops){
+            cc.frame.drawPanel.placeit((int)bilverkstad.getX(), (int)bilverkstad.getY());
+        }
+
+
+        int y = 300;
 
         for (Car car: cc.cars){
             car.setY(y);
-            y += 100;
+            //y += 100;
         }
 
-        // Start a new view and send a reference of self
-        cc.frame = new CarView("CarSim 1.0", cc);
+
 
         // Start the timer
         cc.timer.start();
@@ -52,13 +67,16 @@ public class CarController {
     * */
     private class TimerListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
+            int workshopX = (int) carWorkshops.get(0).getX();
+            int workshopY = (int) carWorkshops.get(0).getY();
+
             for (Car car : cars) {
                 car.move();
 
                 int y = (int) car.getY();
                 int x = (int) car.getX();
 
-                frame.drawPanel.moveit(car);
+                frame.drawPanel.moveit(car.hashCode(),x, y);
                 // repaint() calls the paintComponent method of the panel
                 frame.drawPanel.repaint();
 
@@ -81,6 +99,15 @@ public class CarController {
                     car.setDirection(Directions.EAST);
                     car.setCurrentSpeed(speed);
                 }
+
+                if(Math.abs(x - workshopX) <= 10 && Math.abs(y - workshopY) <= 10){
+                    if(car instanceof Volvo240){
+                        carWorkshops.get(0).addCar(car);
+                        cars.remove(car);
+                    }
+                }
+
+                System.out.println(carWorkshops.get(0).getCarArrayList());
             }
         }
     }
