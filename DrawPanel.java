@@ -19,8 +19,6 @@ public class DrawPanel extends JPanel{
     HashMap<Integer, Point> carToPointMap = new HashMap<>();
 
 
-    private static final ArrayList<CarGameImage> gameImages = new ArrayList<>();
-
     // TODO: Make this general for all cars
     void moveit(int hashcode, int x, int y){
         carToPointMap.put(hashcode, new Point(x,y));
