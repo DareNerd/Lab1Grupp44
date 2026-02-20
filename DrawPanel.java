@@ -1,9 +1,7 @@
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Hashtable;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
