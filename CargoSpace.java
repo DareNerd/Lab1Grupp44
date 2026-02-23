@@ -9,26 +9,6 @@ public class CargoSpace {
     //kan utökas med mer funktionalitet kring faktisk lastning, typ kapacitet
 
 
-    /* tycker inte att denna behövs, finns ingen truck/cartransport som är både tiltable och liftable
-    //constructor for cargo spaces with a tiltable door, can also be liftable
-    public CargoSpace(boolean tiltable, boolean liftable, double maxAngle) {
-        this.tiltable = tiltable;
-        this.liftable = liftable;
-        this.maxAngle = maxAngle;
-    }
-    */
-
-    /* behövs inte heller om ovanstående inte finns
-    //constructor for cargo spaces with only a liftable platform and no tilting abilities
-    public CargoSpace(boolean tiltable, boolean liftable) {
-        if (!tiltable) {
-            throw new IllegalArgumentException("must enter maximum angle if tiltable");
-        }
-        this.tiltable = true;
-        this.liftable = liftable;
-    }
-     */
-
     // för vanlig Truck med tiltable truck bed
     public CargoSpace(boolean tiltable, double maxAngle, Truck truck) {
         this.tiltable = tiltable;
