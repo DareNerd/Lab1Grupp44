@@ -13,14 +13,7 @@ public class DrawPanel extends JPanel{
     BufferedImage volvoWorkshopImage;
     Point volvoWorkshopPoint;
     BufferedImage scaniaImage;
-    HashMap<Integer, BufferedImage> carToImageMap = new HashMap<>();
-    HashMap<Integer, Point> carToPointMap = new HashMap<>();
-
-
-    // TODO: Make this general for all cars
-    void moveit(int hashcode, int x, int y){
-        carToPointMap.put(hashcode, new Point(x,y));
-    }
+    HashMap<Car, BufferedImage> carToImageMap = new HashMap<>();
 
     void placeit(int x, int y){
         volvoWorkshopPoint = new Point(x, y);
@@ -43,18 +36,18 @@ public class DrawPanel extends JPanel{
 
 
     }
-    public void setImageForCar(int hashCode, String carModel)
+    public void setImageForCar(Car car, String carModel)
     {
         switch (carModel)//cange to enum later
         {
             case "Volvo240":
-                carToImageMap.put(hashCode, volvoImage);
+                carToImageMap.put(car, volvoImage);
                 break;
             case "Saab95":
-                carToImageMap.put(hashCode, saabImage);
+                carToImageMap.put(car, saabImage);
                 break;
             case "ScaniaS730":
-                carToImageMap.put(hashCode, scaniaImage);
+                carToImageMap.put(car, scaniaImage);
                 break;
 
         }
@@ -65,9 +58,9 @@ public class DrawPanel extends JPanel{
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        for (Integer hashCode: carToImageMap.keySet()){
-            if(hashCode == null)return;
-            g.drawImage(carToImageMap.get(hashCode),(int)carToPointMap.get(hashCode).getX(), (int)carToPointMap.get(hashCode).getY(), null);
+        for (Car car: carToImageMap.keySet()){
+            if(car == null)return;
+            g.drawImage(carToImageMap.get(car),(int)car.getX(), (int)car.getY(), null);
         }
         g.drawImage(volvoWorkshopImage,(int)volvoWorkshopPoint.getX(), (int)volvoWorkshopPoint.getY(), null);
     }

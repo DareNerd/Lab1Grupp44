@@ -39,14 +39,13 @@ public class CarController {
         cc.cars.add(new Volvo240());
 
         for(Car car: cc.cars){
-            cc.frame.drawPanel.setImageForCar(car.hashCode(), car.getModelName());
-            cc.frame.drawPanel.moveit(car.hashCode(),0,0);
+            cc.frame.drawPanel.setImageForCar(car, car.getModelName());
         }
 
         cc.carWorkshops.add(new VolvoWorkshop(8, 300, 300));
 
         for(Bilverkstad bilverkstad: cc.carWorkshops){
-            cc.frame.drawPanel.placeit((int)bilverkstad.getX(), (int)bilverkstad.getY());
+            cc.frame.placeit((int)bilverkstad.getX(), (int)bilverkstad.getY());
         }
 
 
@@ -77,7 +76,6 @@ public class CarController {
                 int y = (int) car.getY();
                 int x = (int) car.getX();
 
-                frame.drawPanel.moveit(car.hashCode(),x, y);
                 // repaint() calls the paintComponent method of the panel
                 frame.drawPanel.repaint();
 

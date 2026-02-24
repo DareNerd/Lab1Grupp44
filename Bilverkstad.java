@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class Bilverkstad<A> {
+public class Bilverkstad<A extends Car> {
     private final int maxCapacity;
     private final ArrayList<A> carArrayList = new ArrayList<>();
     private int x = 0;
