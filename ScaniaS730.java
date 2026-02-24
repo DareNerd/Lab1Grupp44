@@ -16,7 +16,7 @@ public class ScaniaS730 extends Truck {
     @Override
     public void gas(double amount) {
         if (!truckBed.movingOK()) {
-            throw new RuntimeException("your truck bed is open!");
+            throw new RuntimeException("your truck bed is open! (gas)");
         }
         super.gas(amount);
     }
@@ -24,9 +24,11 @@ public class ScaniaS730 extends Truck {
     @Override
     public void move() {
         if (!truckBed.movingOK()) {
-            throw new RuntimeException("your truck bed is open!");
+            // throw new RuntimeException("your truck bed is open! (move)");
+            System.out.println("Truckbed is open!");
+        } else {
+            super.move();
         }
-        super.move();
     }
 
     public void setTruckBedAngle(double angle) {

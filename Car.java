@@ -6,11 +6,12 @@ public abstract class Car implements Movable {
     private double currentSpeed; // The current speed of the car
     private Color color; // Color of the car
     private String modelName; // The car model name
+    private boolean engineRunning;
 
     private double x = 0;
     private double y = 0;
 
-    private Directions direction = Directions.NORTH;
+    private Directions direction = Directions.EAST;
 
     public Car() {}
 
@@ -24,9 +25,9 @@ public abstract class Car implements Movable {
 
     public void move() {
         if(getDirection() == Directions.NORTH) {
-            this.y += getCurrentSpeed();
-        } else if (getDirection() == Directions.SOUTH) {
             this.y -= getCurrentSpeed();
+        } else if (getDirection() == Directions.SOUTH) {
+            this.y += getCurrentSpeed();
         } else if (getDirection() == Directions.EAST) {
             this.x += getCurrentSpeed();
         } else if (getDirection() == Directions.WEST) {
@@ -75,7 +76,9 @@ public abstract class Car implements Movable {
     public abstract double speedFactor();
 
     public void incrementSpeed(double amount){
-        setCurrentSpeed(Math.min(getCurrentSpeed() + speedFactor() * amount, getEnginePower()));
+        if (engineRunning) {
+            setCurrentSpeed(Math.min(getCurrentSpeed() + speedFactor() * amount, getEnginePower()));
+        }
     }
 
     public void decrementSpeed(double amount){
@@ -84,10 +87,12 @@ public abstract class Car implements Movable {
 
     public void startEngine(){
         currentSpeed = 0.1;
+        engineRunning = true;
     }
 
     public void stopEngine(){
         currentSpeed = 0;
+        engineRunning = false;
     }
 
     public int getNrDoors() {
