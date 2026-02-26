@@ -3,9 +3,9 @@ import java.awt.*;
 
 /**
  * This class represents the full view of the MVC pattern of your car simulator.
- * It initializes with being center on the screen and attaching it's controller in it's state.
+ * It initializes with being center on the screen and attaching its controller in its state.
  * It communicates with the Controller by calling methods of it when an action fires of in
- * each of it's components.
+ * each of its components.
  **/
 
 public class CarView extends JFrame implements TimeObserver {
@@ -90,7 +90,7 @@ public class CarView extends JFrame implements TimeObserver {
         }
 
         for (Bilverkstad bv: carModel.carWorkshops) {
-            placeit((int)bv.getX(), (int)bv.getY());
+            placeIt((int)bv.getX(), (int)bv.getY());
         }
 
         carModel.addObserver(this);
@@ -108,12 +108,12 @@ public class CarView extends JFrame implements TimeObserver {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
-    void placeit(int x, int y){
+    void placeIt(int x, int y){
         drawPanel.placeit(x, y);
     }
 
     @Override
     public void actOnTimeChange(){
         drawPanel.repaint();
-    };
+    }
 }
