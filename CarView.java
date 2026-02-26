@@ -8,11 +8,11 @@ import java.awt.*;
  * each of it's components.
  **/
 
-public class CarView extends JFrame{
+public class CarView extends JFrame implements TimeObserver {
     private static final int X = 800;
     private static final int Y = 800;
 
-    private CarModel carModel;
+    private final CarModel carModel;
 
     DrawPanel drawPanel = new DrawPanel(X, Y-240);
 
@@ -93,6 +93,8 @@ public class CarView extends JFrame{
             placeit((int)bv.getX(), (int)bv.getY());
         }
 
+        carModel.addObserver(this);
+
         // Make the frame pack all it's components by respecting the sizes if possible.
         this.pack();
 
@@ -105,7 +107,13 @@ public class CarView extends JFrame{
         // Make sure the frame exits when "x" is pressed
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
+
     void placeit(int x, int y){
         drawPanel.placeit(x, y);
     }
+
+    @Override
+    public void actOnTimeChange(){
+        drawPanel.repaint();
+    };
 }
