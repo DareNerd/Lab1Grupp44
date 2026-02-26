@@ -85,11 +85,11 @@ public class CarView extends JFrame implements TimeObserver {
         stopButton.setPreferredSize(new Dimension(X/5-15,200));
         this.add(stopButton);
 
-        for (Car car: carModel.cars) {
+        for (Car car: carModel.getCars()) {
             drawPanel.setImageForCar(car, car.getModelName());
         }
 
-        for (Bilverkstad bv: carModel.carWorkshops) {
+        for (Bilverkstad bv: carModel.getCarWorkshops()) {
             placeIt((int)bv.getX(), (int)bv.getY());
         }
 

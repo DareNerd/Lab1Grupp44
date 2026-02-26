@@ -6,8 +6,8 @@ import java.util.Iterator;
 import java.util.List;
 
 public class CarModel {
-    static final ArrayList<Car> cars = new ArrayList<>();
-    static final ArrayList<Bilverkstad> carWorkshops = new ArrayList<>();
+    private final ArrayList<Car> cars = new ArrayList<>();
+    private final ArrayList<Bilverkstad> carWorkshops = new ArrayList<>();
 
     private int gasAmount = 0;
 
@@ -44,15 +44,23 @@ public class CarModel {
         return this.gasAmount;
     }
 
+    public ArrayList<Car> getCars() {
+        return cars;
+    }
+
+    public ArrayList<Bilverkstad> getCarWorkshops() {
+        return carWorkshops;
+    }
+
     /* Each step the TimerListener moves all the cars in the list and tells the
      * view to update its images. Change this method to your needs.
      * */
     private class TimerListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            int workshopX = (int) CarModel.carWorkshops.getFirst().getX();
-            int workshopY = (int) CarModel.carWorkshops.getFirst().getY();
+            int workshopX = (int) carWorkshops.getFirst().getX();
+            int workshopY = (int) carWorkshops.getFirst().getY();
 
-            Iterator<Car> iterator = CarModel.cars.iterator();
+            Iterator<Car> iterator = cars.iterator();
             while (iterator.hasNext()) {
                 Car car = iterator.next();
                 car.move();
@@ -72,7 +80,7 @@ public class CarModel {
 
                 if(Math.abs(x - workshopX) <= 10 && Math.abs(y - workshopY) <= 10){
                     if(car instanceof Volvo240){
-                        CarModel.carWorkshops.getFirst().addCar(car);
+                        carWorkshops.getFirst().addCar(car);
                         iterator.remove();
                     }
                 }
