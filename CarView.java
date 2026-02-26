@@ -85,6 +85,14 @@ public class CarView extends JFrame{
         stopButton.setPreferredSize(new Dimension(X/5-15,200));
         this.add(stopButton);
 
+        for (Car car: carModel.cars) {
+            drawPanel.setImageForCar(car, car.getModelName());
+        }
+
+        for (Bilverkstad bv: carModel.carWorkshops) {
+            placeit((int)bv.getX(), (int)bv.getY());
+        }
+
         // Make the frame pack all it's components by respecting the sizes if possible.
         this.pack();
 

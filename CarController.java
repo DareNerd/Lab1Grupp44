@@ -32,14 +32,6 @@ public class CarController {
     }
 
     private void init() {
-        for (Car car: model.cars) {
-            frame.drawPanel.setImageForCar(car, car.getModelName());
-        }
-
-        for (Bilverkstad bv: model.carWorkshops) {
-            frame.placeit((int)bv.getX(), (int)bv.getY());
-        }
-
         timer.start();
         initActionListeners();
         initChangeListeners();
