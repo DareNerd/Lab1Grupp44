@@ -168,10 +168,10 @@ public abstract class Car implements Movable {
         double speed = getCurrentSpeed();
         setCurrentSpeed(0);
         switch (this.direction) {
-            case Directions.NORTH: this.direction = Directions.SOUTH; break;
-            case Directions.SOUTH: this.direction = Directions.NORTH; break;
-            case Directions.WEST: this.direction = Directions.EAST; break;
-            case Directions.EAST: this.direction = Directions.WEST; break;
+            case Directions.NORTH: setDirection(Directions.SOUTH); break;
+            case Directions.SOUTH: setDirection(Directions.NORTH); break;
+            case Directions.WEST: setDirection(Directions.EAST); break;
+            case Directions.EAST: setDirection(Directions.WEST); break;
         }
         setCurrentSpeed(speed);
     }
