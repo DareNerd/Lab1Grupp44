@@ -8,7 +8,7 @@ public class CarTransport extends Truck {
 
     public CarTransport() {
         super(2, 3000, Color.yellow, "CarTransport");
-        truckBed = new CargoSpace(true, this);
+        truckBed = new CargoSpace(true);
     }
 
     public double speedFactor() {
@@ -48,8 +48,8 @@ public class CarTransport extends Truck {
     }
 
     public void move() {
-        if (!truckBed.movingOK()) {
-            System.out.println("Moving not OK!");
+        if (truckBed.isPlatformLowered()) {
+            System.out.println("Your platform is lowered!");
         } else {
             super.move();
 

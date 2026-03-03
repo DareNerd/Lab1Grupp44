@@ -6,7 +6,7 @@ public class ScaniaS730 extends Truck {
 
     public ScaniaS730() {
         super(2, 200, Color.magenta, "ScaniaS730");
-        truckBed = new CargoSpace(true, 70, this);
+        truckBed = new CargoSpace(true, 70);
     }
 
     public double speedFactor() {
@@ -15,7 +15,7 @@ public class ScaniaS730 extends Truck {
 
     @Override
     public void gas(double amount) {
-        if (!truckBed.movingOK()) {
+        if (truckBed.getTruckBedAngle() > 0) {
             throw new RuntimeException("your truck bed is open! (gas)");
         }
         super.gas(amount);
@@ -23,7 +23,7 @@ public class ScaniaS730 extends Truck {
 
     @Override
     public void move() {
-        if (!truckBed.movingOK()) {
+        if (truckBed.getTruckBedAngle() > 0) {
             // throw new RuntimeException("your truck bed is open! (move)");
             System.out.println("Truckbed is open!");
         } else {
