@@ -10,7 +10,7 @@ public class ScaniaS730 extends Truck {
     }
 
     public double speedFactor() {
-        return getEnginePower() * 0.001;
+        return getEnginePower() * 0.005;
     }
 
     @Override

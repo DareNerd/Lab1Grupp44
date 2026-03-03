@@ -12,7 +12,7 @@ public class CarTransport extends Truck {
     }
 
     public double speedFactor() {
-        return getEnginePower() * 0.0001;
+        return getEnginePower() * 0.001;
     }
 
     public void loadCar(Car car) {
