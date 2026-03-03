@@ -12,8 +12,8 @@ class CargoSpaceTest {
 
     @BeforeEach
     void setup() {
-        tiltableCargoSpace = new CargoSpace(true, 70, testTruck);
-        liftableCargoSpace = new CargoSpace(true,testCarTransport);
+        tiltableCargoSpace = new CargoSpace(true, 70);
+        liftableCargoSpace = new CargoSpace(true);
     }
 
     @Test
