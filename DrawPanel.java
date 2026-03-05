@@ -53,6 +53,12 @@ public class DrawPanel extends JPanel{
         }
     }
 
+    public void removeImageForCar(Car car) {
+        if (!carToImageMap.isEmpty()) {
+            carToImageMap.remove(car);
+        }
+    }
+
     // This method is called each time the panel updates/refreshes/repaints itself
     // TODO: Change to suit your needs.
     @Override

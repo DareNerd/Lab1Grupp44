@@ -4,6 +4,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Random;
 
 public class CarModel {
     private final ArrayList<Car> cars = new ArrayList<>();
@@ -17,6 +18,8 @@ public class CarModel {
     // each step between delays.
     private final Timer timer = new Timer(delay, new TimerListener());
 
+    private int newCarYPosition = 10;
+
     public CarModel() {
         init();
     }
@@ -28,10 +31,10 @@ public class CarModel {
 
         carWorkshops.add(BilverkstadFactory.volvoWorkshopFactory(8, 300, 300));
 
-        int y = 100;
+
         for (Car car: cars) {
-            car.setY(y);
-            y += 100;
+            car.setY(newCarYPosition);
+            newCarYPosition += 80;
         }
         this.timer.start();
     }
@@ -149,6 +152,29 @@ public class CarModel {
         }
     }
 
+    public void addRandomCar() {
+        if (cars.size() < 7) {
+            Random random = new Random();
+            int randomInt = random.nextInt(3);
+            Car newCar;
+            switch (randomInt) {
+                case 0: newCar = CarFactory.saab95Factory(); break;
+                case 1: newCar = CarFactory.scaniaS730Factory(); break;
+                default: newCar = CarFactory.volvo240Factory(); break;
+            }
+            newCar.setY(newCarYPosition);
+            newCarYPosition += 80;
+            cars.add(newCar);
+        }
+    }
+
+    public void removeCar() {
+        if (!cars.isEmpty()) {
+            cars.removeLast();
+            newCarYPosition -= 80;
+        }
+    }
+
     private final List<TimeObserver> observers = new ArrayList<>();
 
     public void addObserver(TimeObserver observer) {
@@ -159,7 +185,7 @@ public class CarModel {
         observers.remove(observer);
     }
 
-    private void multicastTimeChange() {
+    public void multicastTimeChange() {
         for (TimeObserver observer : observers) {
             observer.actOnTimeChange();
         }

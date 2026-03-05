@@ -80,6 +80,27 @@ public class CarController {
             @Override
             public void actionPerformed(ActionEvent e) { model.lowerTruckBed(); }
         });
+
+        frame.addCarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                model.addRandomCar();
+                frame.updateCars();
+                model.multicastTimeChange();
+            }
+        });
+
+        frame.removeCarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (!model.getCars().isEmpty()) {
+                    frame.drawPanel.removeImageForCar(model.getCars().getLast());
+                    model.removeCar();
+                    frame.updateCars();
+                    model.multicastTimeChange();
+                }
+            }
+        });
     }
 
     private void initChangeListeners() {

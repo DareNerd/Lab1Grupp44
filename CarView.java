@@ -29,6 +29,8 @@ public class CarView extends JFrame implements TimeObserver {
     JButton turboOffButton = new JButton("Saab Turbo off");
     JButton liftBedButton = new JButton("Scania Lift Bed");
     JButton lowerBedButton = new JButton("Lower Lift Bed");
+    JButton addCarButton = new JButton("Add Car");
+    JButton removeCarButton = new JButton("Remove Car");
 
     JButton startButton = new JButton("Start all cars");
     JButton stopButton = new JButton("Stop all cars");
@@ -69,6 +71,8 @@ public class CarView extends JFrame implements TimeObserver {
         controlPanel.add(brakeButton, 3);
         controlPanel.add(turboOffButton, 4);
         controlPanel.add(lowerBedButton, 5);
+        controlPanel.add(addCarButton, 6);
+        controlPanel.add(removeCarButton, 7);
         controlPanel.setPreferredSize(new Dimension((X/2)+4, 200));
         this.add(controlPanel);
         controlPanel.setBackground(Color.CYAN);
@@ -85,9 +89,7 @@ public class CarView extends JFrame implements TimeObserver {
         stopButton.setPreferredSize(new Dimension(X/5-15,200));
         this.add(stopButton);
 
-        for (Car car: carModel.getCars()) {
-            drawPanel.setImageForCar(car, car.getModelName());
-        }
+        updateCars();
 
         for (Bilverkstad bv: carModel.getCarWorkshops()) {
             placeIt((int)bv.getX(), (int)bv.getY());
@@ -115,5 +117,11 @@ public class CarView extends JFrame implements TimeObserver {
     @Override
     public void actOnTimeChange(){
         drawPanel.repaint();
+    }
+
+    public void updateCars() {
+        for (Car car: carModel.getCars()) {
+            drawPanel.setImageForCar(car, car.getModelName());
+        }
     }
 }
