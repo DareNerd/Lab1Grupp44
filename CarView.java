@@ -31,6 +31,8 @@ public class CarView extends JFrame implements TimeObserver {
     JButton lowerBedButton = new JButton("Lower Lift Bed");
     JButton addCarButton = new JButton("Add Car");
     JButton removeCarButton = new JButton("Remove Car");
+    JButton turnLeftButton = new JButton("Turn Left");
+    JButton turnRightButton = new JButton("Turn Right");
 
     JButton startButton = new JButton("Start all cars");
     JButton stopButton = new JButton("Stop all cars");
@@ -69,10 +71,12 @@ public class CarView extends JFrame implements TimeObserver {
         controlPanel.add(turboOnButton, 1);
         controlPanel.add(liftBedButton, 2);
         controlPanel.add(addCarButton, 3);
-        controlPanel.add(brakeButton, 4);
-        controlPanel.add(turboOffButton, 5);
-        controlPanel.add(lowerBedButton, 6);
-        controlPanel.add(removeCarButton, 7);
+        controlPanel.add(turnLeftButton, 4);
+        controlPanel.add(brakeButton, 5);
+        controlPanel.add(turboOffButton, 6);
+        controlPanel.add(lowerBedButton, 7);
+        controlPanel.add(removeCarButton, 8);
+        controlPanel.add(turnRightButton, 9);
         controlPanel.setPreferredSize(new Dimension((X/2)+4, 200));
         this.add(controlPanel);
         controlPanel.setBackground(Color.CYAN);

@@ -101,6 +101,20 @@ public class CarController {
                 }
             }
         });
+
+        frame.turnLeftButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                model.turnLeftAllCars();
+            }
+        });
+
+        frame.turnRightButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                model.turnRightAllCars();
+            }
+        });
     }
 
     private void initChangeListeners() {

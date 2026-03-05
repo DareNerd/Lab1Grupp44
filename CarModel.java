@@ -1,10 +1,8 @@
 import javax.swing.*;
+import javax.swing.Timer;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class CarModel {
     private final ArrayList<Car> cars = new ArrayList<>();
@@ -172,6 +170,18 @@ public class CarModel {
         if (!cars.isEmpty()) {
             cars.removeLast();
             newCarYPosition -= 80;
+        }
+    }
+
+    public void turnLeftAllCars() {
+        for (Car car: cars) {
+            car.turnLeft();
+        }
+    }
+
+    public void turnRightAllCars() {
+        for (Car car: cars) {
+            car.turnRight();
         }
     }
 
