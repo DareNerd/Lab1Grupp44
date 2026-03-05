@@ -86,7 +86,7 @@ public class CarController {
             public void actionPerformed(ActionEvent e) {
                 model.addRandomCar();
                 frame.updateCars();
-                model.multicastTimeChange();
+                //model.multicastTimeChange();
             }
         });
 
@@ -97,7 +97,7 @@ public class CarController {
                     frame.drawPanel.removeImageForCar(model.getCars().getLast());
                     model.removeCar();
                     frame.updateCars();
-                    model.multicastTimeChange();
+                    //model.multicastTimeChange();
                 }
             }
         });
