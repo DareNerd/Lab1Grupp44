@@ -81,7 +81,7 @@ public class CarModel {
                     car.reverseDirection();
                 }
 
-                if(Math.abs(x - workshopX) <= 10 && Math.abs(y - workshopY) <= 10){
+                if(Math.abs(x - workshopX) <= 30 && Math.abs(y - workshopY) <= 30){
                     if(car instanceof Volvo240){
                         carWorkshops.getFirst().addCar(car);
                         iterator.remove();
