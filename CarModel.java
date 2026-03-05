@@ -153,11 +153,12 @@ public class CarModel {
     public void addRandomCar() {
         if (cars.size() < 7) {
             Random random = new Random();
-            int randomInt = random.nextInt(3);
+            int randomInt = random.nextInt(4);
             Car newCar;
             switch (randomInt) {
                 case 0: newCar = CarFactory.saab95Factory(); break;
                 case 1: newCar = CarFactory.scaniaS730Factory(); break;
+                case 2: newCar = CarFactory.batmobileFactory(); break;
                 default: newCar = CarFactory.volvo240Factory(); break;
             }
             newCar.setY(newCarYPosition);

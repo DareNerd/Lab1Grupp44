@@ -15,4 +15,6 @@ public class CarFactory {
     public static CarTransport carTransportFactory() {
         return new CarTransport();
     }
+
+    public static Batmobile batmobileFactory() { return new Batmobile(); }
 }
