@@ -1,170 +1,129 @@
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.Iterator;
 
 
 /*
 * This class represents the Controller part in the MVC pattern.
-* Its responsibilities are to listen to the View and responds in a appropriate manner by
+* Its responsibilities are to listen to the View and responds in an appropriate manner by
 * modifying the model state and the updating the view.
  */
 
 public class CarController {
-    // member fields:
-
-    // The delay (ms) corresponds to 20 updates a sec (hz)
-    private final int delay = 50;
-    // The timer is started with a listener (see below) that executes the statements
-    // each step between delays.
-    private Timer timer = new Timer(delay, new TimerListener());
-
     // The frame that represents this instance View of the MVC pattern
-    CarView frame;
-    // A list of cars, modify if needed
-    ArrayList<Car> cars = new ArrayList<>();
-    ArrayList<Bilverkstad> carWorkshops = new ArrayList<>();
+    private final CarView frame;
+    private final CarModel model;
 
-    //methods:
+    public CarController(CarView cv, CarModel cm) {
+        this.frame = cv;
+        this.model = cm;
 
-    public static void main(String[] args) {
-        // Instance of this class
-        CarController cc = new CarController();
-        // Start a new view and send a reference of self
-        cc.frame = new CarView("CarSim 1.0", cc);
-
-        cc.cars.add(new Saab95());
-        cc.cars.add(new ScaniaS730());
-        cc.cars.add(new Volvo240());
-
-        for(Car car: cc.cars){
-            cc.frame.drawPanel.setImageForCar(car, car.getModelName());
-        }
-
-        cc.carWorkshops.add(new VolvoWorkshop(8, 300, 300));
-
-        for(Bilverkstad bilverkstad: cc.carWorkshops){
-            cc.frame.placeit((int)bilverkstad.getX(), (int)bilverkstad.getY());
-        }
-
-
-        int y = 100;
-
-        for (Car car: cc.cars){
-            car.setY(y);
-            y += 100;
-        }
-
-        // Start the timer
-        cc.timer.start();
+        init();
     }
 
-    /* Each step the TimerListener moves all the cars in the list and tells the
-    * view to update its images. Change this method to your needs.
-    * */
-    private class TimerListener implements ActionListener {
-        public void actionPerformed(ActionEvent e) {
-            int workshopX = (int) carWorkshops.getFirst().getX();
-            int workshopY = (int) carWorkshops.getFirst().getY();
+    private void init() {
+        initActionListeners();
+        initChangeListeners();
+    }
 
-            Iterator<Car> iterator = cars.iterator();
-            while (iterator.hasNext()) {
-                Car car = iterator.next();
-                car.move();
+    private void initActionListeners() {
+        frame.gasButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                model.gas(model.getGasAmount());
+            }
+        });
 
-                int y = (int) car.getY();
-                int x = (int) car.getX();
+        frame.brakeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) { model.brake(model.getGasAmount());}
+        });
 
-                // repaint() calls the paintComponent method of the panel
-                frame.drawPanel.repaint();
+        frame.startButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                model.startAllCars();
+            }
+        });
 
-                double speed = car.getCurrentSpeed();
+        frame.stopButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                model.stopAllCars();
+            }
+        });
 
-                if (y >= 510) {
-                    car.setCurrentSpeed(0);
-                    car.setDirection(Directions.NORTH);
-                    car.setCurrentSpeed(speed);
-                } else if (y <= 0) {
-                    car.setCurrentSpeed(0);
-                    car.setDirection(Directions.SOUTH);
-                    car.setCurrentSpeed(speed);
-                } else if (x >= 700) {
-                    car.setCurrentSpeed(0);
-                    car.setDirection(Directions.WEST);
-                    car.setCurrentSpeed(speed);
-                } else if (x <= 0){
-                    car.setCurrentSpeed(0);
-                    car.setDirection(Directions.EAST);
-                    car.setCurrentSpeed(speed);
+        frame.turboOnButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                model.turboOn();
+            }
+        });
+
+        frame.turboOffButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                model.turboOff();
+            }
+        });
+
+        frame.liftBedButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                model.liftTruckBed();
+            }
+        });
+
+        frame.lowerBedButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) { model.lowerTruckBed(); }
+        });
+
+        frame.addCarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                model.addRandomCar();
+                frame.updateCars();
+                //model.multicastTimeChange();
+            }
+        });
+
+        frame.removeCarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (!model.getCars().isEmpty()) {
+                    frame.drawPanel.removeImageForCar(model.getCars().getLast());
+                    model.removeCar();
+                    frame.updateCars();
+                    //model.multicastTimeChange();
                 }
-
-                if(Math.abs(x - workshopX) <= 10 && Math.abs(y - workshopY) <= 10){
-                    if(car instanceof Volvo240){
-                        carWorkshops.getFirst().addCar(car);
-                        iterator.remove();
-                    }
-                }
             }
-        }
-    }
+        });
 
-    // Calls the gas method for each car once
-    void gas(int amount) {
-        double gas = ((double) amount) / 100;
-        for (Car car : cars) {
-            car.gas(gas);
-        }
-    }
-
-    void brake(int amount){
-        double brake = ((double) amount)/100;
-        for (Car car: cars){
-            car.brake(brake);
-        }
-    }
-
-    void turboOn() {
-        for (Car car: cars) {
-            if (car instanceof Saab95 saab95) {
-                saab95.setTurboOn();
+        frame.turnLeftButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                model.turnLeftAllCars();
             }
-        }
-    }
+        });
 
-    void turboOff() {
-        for (Car car: cars) {
-            if (car instanceof Saab95 saab95) {
-                saab95.setTurboOff();
+        frame.turnRightButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                model.turnRightAllCars();
             }
-        }
+        });
     }
 
-    void startAllCars() {
-        for (Car car: cars) {
-            car.startEngine();
-        }
-    }
-
-    void stopAllCars() {
-        for (Car car: cars) {
-            car.stopEngine();
-        }
-    }
-
-    void liftTruckBed() {
-        for (Car car: cars) {
-            if (car instanceof ScaniaS730 scaniaS730) {
-                scaniaS730.setTruckBedAngle(70);
+    private void initChangeListeners() {
+        frame.gasSpinner.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                int gasAmount = (int) ((JSpinner)e.getSource()).getValue();
+                model.setGasAmount(gasAmount);
             }
-        }
-    }
-
-    void lowerTruckBed() {
-        for (Car car: cars) {
-            if (car instanceof ScaniaS730 scaniaS730) {
-                scaniaS730.setTruckBedAngle(0);
-            }
-        }
+        });
     }
 }

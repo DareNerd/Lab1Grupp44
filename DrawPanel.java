@@ -13,6 +13,7 @@ public class DrawPanel extends JPanel{
     BufferedImage volvoWorkshopImage;
     Point volvoWorkshopPoint;
     BufferedImage scaniaImage;
+    BufferedImage batmobileImage;
     HashMap<Car, BufferedImage> carToImageMap = new HashMap<>();
 
     void placeit(int x, int y){
@@ -29,6 +30,7 @@ public class DrawPanel extends JPanel{
             volvoWorkshopImage = ImageIO.read(DrawPanel.class.getResourceAsStream("pics/VolvoBrand.jpg"));
             saabImage = ImageIO.read(DrawPanel.class.getResourceAsStream("pics/Saab95.jpg"));
             scaniaImage = ImageIO.read(DrawPanel.class.getResourceAsStream("pics/Scania.jpg"));
+            batmobileImage = ImageIO.read(DrawPanel.class.getResourceAsStream("pics/batmobile.jpg"));
         } catch (IOException ex)
         {
             System.out.println("Could not find picture!");
@@ -49,7 +51,14 @@ public class DrawPanel extends JPanel{
             case "ScaniaS730":
                 carToImageMap.put(car, scaniaImage);
                 break;
+            case "Batmobile":
+                carToImageMap.put(car, batmobileImage);
+        }
+    }
 
+    public void removeImageForCar(Car car) {
+        if (!carToImageMap.isEmpty()) {
+            carToImageMap.remove(car);
         }
     }
 

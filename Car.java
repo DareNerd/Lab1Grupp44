@@ -86,8 +86,10 @@ public abstract class Car implements Movable {
     }
 
     public void startEngine(){
-        currentSpeed = 0.1;
-        engineRunning = true;
+        if(currentSpeed == 0){
+            currentSpeed = 0.1;
+            engineRunning = true;
+        }
     }
 
     public void stopEngine(){
@@ -162,5 +164,17 @@ public abstract class Car implements Movable {
 
     public void setDirection(Directions direction) {
         this.direction = direction;
+    }
+
+    public void reverseDirection() {
+        double speed = getCurrentSpeed();
+        setCurrentSpeed(0);
+        switch (this.direction) {
+            case Directions.NORTH: setDirection(Directions.SOUTH); break;
+            case Directions.SOUTH: setDirection(Directions.NORTH); break;
+            case Directions.WEST: setDirection(Directions.EAST); break;
+            case Directions.EAST: setDirection(Directions.WEST); break;
+        }
+        setCurrentSpeed(speed);
     }
 }
